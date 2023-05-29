@@ -1,20 +1,10 @@
 <script>
   import Todo from "../lib/Todo.svelte";
 
-  let todo = "";
-  let TODOS = [];
+  let todos = [];
+  let message = "";
+  let todoValue = "";
   const API_URL = "http://localhost:5000";
-
-  const addTodo = async () => {
-    let formData = { title: todo, completed: false };
-    const response = await fetch(`${API_URL}/todos`, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await response.json();
-    todo = "";
-  };
 
   const getTodos = async () => {
     const response = await fetch(`${API_URL}/todos`, {
@@ -22,23 +12,56 @@
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-    TODOS.push(data);
-    console.log("TODOS: ", TODOS);
+    todos.push(...data);
+    todos = todos;
+    return data;
+  };
+
+  const addTodo = async () => {
+    if (todoValue === "") {
+      message = "Please enter a todo!";
+      return;
+    }
+    let formData = { title: todoValue, completed: false };
+    const response = await fetch(`${API_URL}/todos`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    todos.push(data);
+    todos = todos;
+    todoValue = "";
+    return;
   };
 
   $: getTodos();
+  $: todos;
 </script>
 
 <main class="container">
+  <center><span><b>{message || ""}</b></span></center>
   <form on:submit|preventDefault={addTodo}>
     <label for="todo">Todo</label>
-    <input type="text" placeholder="Add Todo" name="todo" bind:value={todo} />
+    <input
+      type="text"
+      placeholder="Add Todo"
+      name="todo"
+      bind:value={todoValue}
+      on:focus={() => (message = "")}
+    />
     <input type="submit" value="Add" class="btn btn-primary" />
   </form>
 
-  {#each TODOS as todo, i (todo.id)}
+  {#each todos as todo}
     <Todo {todo} />
   {:else}
     <article>No todos available!</article>
   {/each}
 </main>
+
+<style>
+  span {
+    color: red;
+  }
+</style>

@@ -1,5 +1,7 @@
 {
   "name": "todo-svelte-app",
+  "productName": "Todo App",
+  "description": "A simple todo app built on Svelte, Vite & Electron",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -26,5 +28,31 @@
     "boxicons": "^2.1.4",
     "localbase": "^0.7.5",
     "svelte-spa-router": "^3.3.0"
-  }
+  },
+  "build": {
+    "appId": "com.ranckosolutions.todo-svelte-electron-app",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "uninstallDisplayName": "Todo App",
+      "license": "LICENSE.md",
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "./build/**/*",
+      "./electron/*"
+    ]
+  },
+  "author": {
+    "name": "MikeTeddyOmondi",
+    "email": "mike_omondi@outlook.com"
+  },
+  "license": "Apache-2.0"
 }
