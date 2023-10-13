@@ -26,6 +26,7 @@
   "dependencies": {
     "@picocss/pico": "^1.5.10",
     "boxicons": "^2.1.4",
+    "doculite": "^1.0.4",
     "localbase": "^0.7.5",
     "svelte-spa-router": "^3.3.0"
   },

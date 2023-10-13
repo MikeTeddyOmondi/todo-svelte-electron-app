@@ -1,5 +1,6 @@
 <script>
   import Todo from "../lib/Todo.svelte";
+  // import {todoStore} from "../stores/todoStore.js";
 
   let todos = [];
   let message = "";
